@@ -1,0 +1,15 @@
+
+Maybe I should use the ServiceProvider frame work to load subclasses for polymorphic
+entities rather than defining them using the entity annotation? The entity annotation
+makes sense when the number of subclasses is small. Three or four. But if the list
+got up to around 20 or so it would be very ugly.
+
+=================================================================================================
+
+Maybe some test cases for more complex CollectionType/MapType usage..
+
+=================================================================================================
+
+For the most part I am done with version 1.0 of the JSONMarshaller.
+
+=================================================================================================

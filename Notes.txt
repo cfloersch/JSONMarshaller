@@ -1,0 +1,122 @@
+Design notes
+
+
+The entire system operates on recursion and delegation process. We begin with the
+top level entity to encode/decode. We create an object graph of that entity using
+descriptors.  A typical descriptor understands how to encode/decode a particular
+type such as a polymorphic entity, a concrete entity, and array, or any of the
+many java objects (String, Long, Float, Byte, Boolean, URI, URL, Date, etc) or
+primitive types such as long, boolean, int, etc.
+
+If everything was an object than this would be fairly easy. However, because we
+do support primitives we must delegate to the descriptor itself to perform most
+operations on the array or entity the values belong to. For example when an
+entity needs to encode an int field it must delegate to the descriptor so that
+it may pull the int using a method specific to int types.
+
+As a result all subtree (aka other than the initial top level object) are
+encoded/decoded by the object descriptors and set onto their parent entity or
+array by those object descriptors.
+
+Entity's iterate their fields which delegate to the descriptor for the given
+type to get the value from their field, encode it, and return the encoded
+value. Array's delegate to their descriptors to access the element at a given
+index, encode it, and return the encoded value.
+
+Entity's iterate their fields which delegate to the descriptor for the given
+type to decode the JSON value and set it back onto the field in a type specific
+manner. Likewise, an array delegates to the descriptor to decode the JSON value
+and set it onto the given array at the specified index using a type specific
+mechanism.
+
+Many of the descriptor implementations will delegate the actual process of
+encoding/decoding to the top level methods when operating on objects. Those
+methods will not function for primitive type descriptors.
+
+===========================================================================================
+
+To prevent circular recursion which happens whenever an entitiy's field refernces
+the entity itself, I implemented a model where all entity descriptors cached.
+The way it works is this. When we discover we need to create an entity descriptor
+we first check to see if one exists in the cache. If so we use it an discontinue
+processing. If it does not exist we create a delegating entity descriptor with
+no delegate and add it to the cache. Any child field that references the same
+entity of course would see it as being cached and discontinue the recursion.
+Once the initial code that created the delegating entity descriptor creates the
+actual descriptor it is then set on the delegating wrapper as the delegate. Thus
+when we actually marshall/unmarshall there is an actual descriptor there to do
+the encoding/decoding at all levels of the object graph.
+
+
+If(cache.contains(type)) return cache.get(type);
+cache.put(type, delegatingEntityDescriptor);
+return cache.define(type, createActualEntity());
+
+===========================================================================================
+
+
+
+Main object encoding/decoding methods on any descriptor
+  Object<?> unmarshall(JSONObject marshalled, String view)
+  JSONObject marshall(Object<?> entity, String view)
+
+    Called by the main marshaller to start the process of marshalling or
+    unmarshalling the object tree.
+
+    It is also called by the object descriptors (delegated) to perform the
+    actual encode/decode of the objects to be set on a parent field or array
+
+
+
+Entity -> FieldDescriptor
+  void unmarshall(Object<?> entity, String view, JSONObject marshalled);
+  void marshall(Object<?> entity, String view, JSONObject jsonObject)
+
+    Except in the case of primitive descriptor impls these methods often
+    delegate the actual marshalling/unmarshalling to the above two methods.
+
+    These impls often delegate to the main encoding/decoding methods when they
+    represent object descriptions rather than primitive desxcriptors.
+
+
+FieldDescriptor -> Descriptor
+  void unmarshall(FieldDescriptor fieldDescriptor, Object<?> entity, JSONValue marshalled, String view);
+  JSONValue marshall(FieldDescriptor fieldDescriptor, Object<?> entity, String view);
+
+    Called exclusively by the array descriptor. Like the field processing of
+    an entity an array may contain object or primitive values and only the
+    implementation would know how to properly handle the type with out boxing
+    and unboxing operations.
+
+    These impls often delegate to the main encoding/decoding methods when they
+    represent object descriptions rather than primitive desxcriptors.
+
+
+
+
+======================================================================================
+
+
+I would have loved a means to specify the MapType or CollectionType for each field
+but it proved very difficult. I started with a type parameter on the Value annotation
+but that didn't work for a number of reasons. First the annotation is only available
+within the scope of the FieldDescriptor and not its sub value descriptor. Second it
+could not handle the following cases:
+
+Map<String,List<String>> or List<List<String>> Obviously in the first example we could
+possibly deduce that the type belongs to either List or Map but it was impossible to
+set a value for both. Of course we could do an array of types to solve that but that
+becomes unwieldy quickly.
+
+So in the end I chose to do a globally sensitive setter based approach. I think
+if they wanted to specify exact types they could always do
+
+HashMap<String,LinkedList<String>>
+
+or
+
+LinkedList<ArrayList<String>>
+
+Problem solved.
+
+

@@ -1,0 +1,16 @@
+{
+    "colors":
+        {
+            "name":"red",
+            "hexValue":"#f00"
+        },
+        {
+            "name":"green",
+            "hexValue":"#0f0"
+        },
+        {
+            "name":"black",
+            "hexValue":"#000"
+        }
+    ]
+}
