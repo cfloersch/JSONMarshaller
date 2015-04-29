@@ -189,3 +189,111 @@ The name field will be marshalled in the full and simple views, whereas the url 
 the full view. To specify the view of an entity to take when marshalling or unmarshalling, please look out the
 updated interface of the JSONMarshaller.
 
+
+
+
+Interfaces
+----------
+
+How do I marshall a List that contains classes that implement an interface?
+
+Imagine you have a garage with vehicles:
+
+
+````
+@Entity
+public class Garage {
+   @Value
+   private List<Vehicle> vehicles = new ArrayList<Vehicle>();
+
+   public void add(Vehicle v) {
+      vehicles.add(v);
+   }
+}
+
+public interface Vehicle {
+   public int wheelCount();
+}
+````
+
+
+How can I get JSONMarshaller to marshall this? If you just add @Entity to the Vehicle interface you'll get an
+error: java.lang.IllegalArgumentException: interface Vehicle does not have a no argument constructor. And that
+makes total sense, as it's an interface! Of course it doesn't have a no argument constructor! The implementing
+classes have that constructor. Here's what you do:
+
+* Add to the Interface the option discriminatorName. This will add a field in the json of the subclasses with
+  that name. This field is used to distinguish between the different subclasses.
+* Add to each subclass the option discriminator. This will be the value used for above mentioned field, for that
+  subclass.
+* Add to the Interface the option subclasses. This will let the marshaller know which classes it needs to parse.
+
+So our example becomes:
+
+````
+@Entity
+public class Garage {
+   @Value
+   private List<Vehicle> vehicles = new ArrayList<Vehicle>();
+
+   public void add(Vehicle v) {
+      vehicles.add(v);
+   }
+}
+
+@Entity(discriminatorName = "type", subclasses = {Car.class, Motorcycle.class})
+public interface Vehicle {
+   public int wheelCount();
+}
+
+@Entity(discriminator="Car")
+public class Car implements Vehicle {
+   @Value
+   private int wheels = 4;
+
+   public int wheelCount() {
+      return wheels;
+   }
+}
+
+@Entity(discriminator = "Motorcycle")
+public class Motorcycle implements Vehicle {
+   @Value
+   private int wheels = 2;
+
+   public int wheelCount() {
+      return wheels;
+   }
+}
+````
+
+If we marshall this:
+
+````
+Garage g = new Garage();
+g.add(new Car());
+g.add(new Motorcycle());
+JSONMarshaller<Garage> m = JSONMarshaller.create(Garage.class);
+System.out.println(m.marshall(g));
+````
+
+We get as a result:
+
+````
+{
+   "vehicles":[
+      {
+         "type":"Car",
+         "wheels":4
+      },
+      {
+         "type":"Motorcycle",
+          "wheels":2
+      }
+   ]
+}
+````
+
+The two objects in the List vehicles now each have an extra field type that tells the marshaller what
+class to use when unmarshalling this type.
+
