@@ -297,3 +297,86 @@ We get as a result:
 The two objects in the List vehicles now each have an extra field type that tells the marshaller what
 class to use when unmarshalling this type.
 
+
+
+User Defined Types
+------------------
+
+To support objects for which you do not control the source code or complex types, JSONMarshaller supports
+user defined types.
+
+Lets see an example:
+
+````
+@Entity
+public class Resource {
+   @Value
+   private URI uri;
+}
+````
+
+The URI class is actually a pre-packaged user type so the following is actually done and bundled with the
+API.
+
+First we need to create our JSONUserType implementation.
+
+
+````
+public class URIType implements JSONUserType<URI, JSONString> {
+
+   public JSONString marshall(URI entity)
+   {
+      return string(entity.toString());
+   }
+
+   public URI unmarshall(JSONString object)
+   {
+      try {
+         return new URI(object.getString());
+      } catch(URISyntaxException e) {
+         throw new MarshallingException("invalid uri syntax", e);
+      }
+   }
+
+   public Class<URI> getReturnedClass()
+   {
+      return URI.class;
+   }
+}
+````
+
+The above sample simply stores the uri as a JSON String. However, if the string is not in the proper format
+a MarshallingException will be thrown when unmarshalling the source JSON.
+
+Next we need to create our UserTypeService implementation:
+
+````
+public class DefaultUserTypes implements UserTypeService {
+
+   public JSONUserType<?, ? extends JSONValue> create(Type type)
+   {
+      if(type instanceof Class) {
+         Class klass = (Class) type;
+         if (klass == URI.class) {
+            return new URIType();
+         }
+      }
+      return null;
+   }
+}
+````
+
+In this case our service only supports the single user type. It would of course behove you to bundle several
+user types together in a single service provider impl.
+
+Finally, we need to define our service provider using the standard java service provider methodology. To do
+that we create a text file that will be located in the classpath with the following path and file name:
+
+/META-INF/services/xpertss.json.spi.UserTypeService
+
+The contents would be the fully qualified name of your service procvider impl
+
+````
+org.xpertss.json.types.DefaultUserTypes
+````
+
