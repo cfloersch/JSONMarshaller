@@ -249,7 +249,7 @@ class Address {
 ````
 
 The name field will be marshalled in the full and simple views, whereas the url field will only be marshalled in
-the full view. To specify the view of an entity to take when marshalling or unmarshalling, please look out the
+the full view. To specify the view of an entity to take when marshalling or unmarshalling, please look at the
 updated interface of the JSONMarshaller.
 
 
@@ -482,16 +482,39 @@ Book book = marshaller.unmarshall((JSONObject)value);
 
 In the above example we take a servlet request and get the Reader for the entity data and pass it to the parse
 method which converts it into a JSONValue instance. In many cases we can simply cast it to a JSONObject if we
-know it is a JSONObject as shown above. However, a cleaner method would be to use JSONValue's  visitor pattern
+know it is a JSONObject as shown above. However, a cleaner method would be to use JSONValue's visitor pattern
 to discern the type.
 
 ````
 JSONValue value = JSON.parse(request.getReader());
-JSONObject obj = value.visit(new JSONVisitor.Illegal<JSONObject>() {
-   @Override public JSONObject caseNull() { return null; }
-   @Override public JSONObject caseObject(JSONObject object) { return object; }
+Book book = value.visit(new JSONVisitor.Illegal<Book>() {
+   @Override public Book caseNull() { return null; }
+   @Override public Book caseObject(JSONObject object) { return marshaller.unmarshall(object); }
 });
 ````
+
+The corollary of course is to encode the result of a marshalling operation:
+
+````
+JSONValue value = marshaller.marshall(book);
+String encoded = JSON.stringify(value);
+````
+
+or even better:
+
+````
+JSONValue value = marshaller.marshall(book);
+value.write(response.getWriter());
+````
+
+Both of the above will produce minified output. To encode it in a nicely formatted human readable fashion:
+
+````
+JSONValue value = marshaller.marshall(book);
+String encoded = value.toString();
+````
+
+
 
 Builders
 
