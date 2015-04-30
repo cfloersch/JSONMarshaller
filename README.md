@@ -100,9 +100,33 @@ Built in Type Support
 JSONMarshaller supports all base types, their corresponding wrapper classes, String and Enum types. To
 (un)marshall user defined types please refer to the UserDefinedTypes tutorial.
 
-byte, short, char, int, long, float, double
+Literals
+ * boolean
+ * byte
+ * short
+ * char
+ * int
+ * long
+ * float
+ * double
 
-Byte, Short, Character, Integer, Long, Float, Double, BigInteger, BigDecimal, String
+Objects
+ * Boolean
+ * Byte
+ * Short
+ * Character
+ * Integer
+ * Long
+ * Float
+ * Double
+ * BigInteger
+ * BigDecimal
+ * String
+
+NOTE: JSON represents numerics as 64 bit floating point values like Java doubles. This means that some
+values of long, Long, BigDecimal, and BigInteger can overflow during the marshalling process. This library
+will prevent that from happening by throwing an ArithmeticException.
+
 
 
 Enum Support
@@ -419,3 +443,15 @@ The contents would be the fully qualified name of your service procvider impl
 org.xpertss.json.types.DefaultUserTypes
 ````
 
+The JSONMarshaller ships with a number of default User Types:
+
+* Currency
+* Date
+* InetAddress
+* Locale
+* MimeType
+* Pattern
+* Timezone
+* URI
+* URL
+* UUID
