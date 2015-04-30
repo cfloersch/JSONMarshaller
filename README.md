@@ -97,30 +97,18 @@ Book class!
 Built in Type Support
 ---------------------
 
-JSONMarshaller supports all base types, their corresponding wrapper classes, String and Enum types. To
-(un)marshall user defined types please refer to the UserDefinedTypes tutorial.
+JSONMarshaller supports the following types:
 
 Literals
  * boolean
- * byte
- * short
- * char
- * int
- * long
- * float
- * double
+ * byte, short, char, int, long
+ * float, double
 
 Objects
  * Boolean
- * Byte
- * Short
- * Character
- * Integer
- * Long
- * Float
- * Double
- * BigInteger
- * BigDecimal
+ * Byte, Short, Character, Integer, Long
+ * Float, Double
+ * BigInteger, BigDecimal
  * String
 
 NOTE: JSON represents numerics as 64 bit floating point values like Java doubles. This means that some
@@ -187,6 +175,113 @@ class Foo {
 You can also change the default Map, Set, List implementation via the system wide setters defined in
 CollectionType and MapType. Changes made to those setters will impact all unmarshalling within the
 class loader.
+
+Collections must have their generics specified. The following would fail:
+
+````
+@Entity
+class Foo {
+   @Value
+   private HashSet books;
+}
+````
+
+
+
+User Defined Types
+------------------
+
+To support objects for which you do not control the source code or complex types, JSONMarshaller supports
+user defined types.
+
+Lets see an example:
+
+````
+@Entity
+public class Resource {
+   @Value
+   private URI uri;
+}
+````
+
+The URI class is actually a pre-packaged user type so the following is actually done and bundled with the
+API.
+
+First we need to create our JSONUserType implementation.
+
+
+````
+public class URIType implements JSONUserType<URI, JSONString> {
+
+   public JSONString marshall(URI entity)
+   {
+      return string(entity.toString());
+   }
+
+   public URI unmarshall(JSONString object)
+   {
+      try {
+         return new URI(object.getString());
+      } catch(URISyntaxException e) {
+         throw new MarshallingException("invalid uri syntax", e);
+      }
+   }
+
+   public Class<URI> getReturnedClass()
+   {
+      return URI.class;
+   }
+}
+````
+
+The above sample simply stores the uri as a JSON String. However, if the string is not in the proper format
+a MarshallingException will be thrown when unmarshalling the source JSON.
+
+Next we need to create our UserTypeService implementation:
+
+````
+public class DefaultUserTypes implements UserTypeService {
+
+   public JSONUserType<?, ? extends JSONValue> create(Type type)
+   {
+      if(type instanceof Class) {
+         Class klass = (Class) type;
+         if (klass == URI.class) {
+            return new URIType();
+         }
+      }
+      return null;
+   }
+}
+````
+
+In this case our service only supports the single user type. It would of course behove you to bundle several
+user types together in a single service provider impl.
+
+Finally, we need to define our service provider using the standard java service provider methodology. To do
+that we create a text file that will be located in the classpath with the following path and file name:
+
+/META-INF/services/xpertss.json.spi.UserTypeService
+
+The contents would be the fully qualified name of your service procvider impl
+
+````
+org.xpertss.json.types.DefaultUserTypes
+````
+
+The JSONMarshaller ships with a number of default User Types:
+
+* Currency
+* Date
+* InetAddress
+* Locale
+* MimeType
+* Pattern
+* Timezone
+* URI
+* URL
+* UUID
+
 
 
 
@@ -362,99 +457,6 @@ class to use when unmarshalling this type.
 
 
 
-User Defined Types
-------------------
-
-To support objects for which you do not control the source code or complex types, JSONMarshaller supports
-user defined types.
-
-Lets see an example:
-
-````
-@Entity
-public class Resource {
-   @Value
-   private URI uri;
-}
-````
-
-The URI class is actually a pre-packaged user type so the following is actually done and bundled with the
-API.
-
-First we need to create our JSONUserType implementation.
-
-
-````
-public class URIType implements JSONUserType<URI, JSONString> {
-
-   public JSONString marshall(URI entity)
-   {
-      return string(entity.toString());
-   }
-
-   public URI unmarshall(JSONString object)
-   {
-      try {
-         return new URI(object.getString());
-      } catch(URISyntaxException e) {
-         throw new MarshallingException("invalid uri syntax", e);
-      }
-   }
-
-   public Class<URI> getReturnedClass()
-   {
-      return URI.class;
-   }
-}
-````
-
-The above sample simply stores the uri as a JSON String. However, if the string is not in the proper format
-a MarshallingException will be thrown when unmarshalling the source JSON.
-
-Next we need to create our UserTypeService implementation:
-
-````
-public class DefaultUserTypes implements UserTypeService {
-
-   public JSONUserType<?, ? extends JSONValue> create(Type type)
-   {
-      if(type instanceof Class) {
-         Class klass = (Class) type;
-         if (klass == URI.class) {
-            return new URIType();
-         }
-      }
-      return null;
-   }
-}
-````
-
-In this case our service only supports the single user type. It would of course behove you to bundle several
-user types together in a single service provider impl.
-
-Finally, we need to define our service provider using the standard java service provider methodology. To do
-that we create a text file that will be located in the classpath with the following path and file name:
-
-/META-INF/services/xpertss.json.spi.UserTypeService
-
-The contents would be the fully qualified name of your service procvider impl
-
-````
-org.xpertss.json.types.DefaultUserTypes
-````
-
-The JSONMarshaller ships with a number of default User Types:
-
-* Currency
-* Date
-* InetAddress
-* Locale
-* MimeType
-* Pattern
-* Timezone
-* URI
-* URL
-* UUID
 
 
 
