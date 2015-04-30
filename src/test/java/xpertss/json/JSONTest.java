@@ -327,8 +327,7 @@ public class JSONTest {
    @Test
    public void testStringifyOfObject()
    {
-      JSONObject object = object(string("high"), number(3),
-                                 string("low"),number(1));
+      JSONObject object = object(string("high"), number(3), string("low"), number(1));
       assertEquals("{\"high\":3,\"low\":1}", JSON.stringify(object));
    }
 
@@ -488,6 +487,26 @@ public class JSONTest {
    }
 
 
+   @Test
+   public void testVisitor()
+   {
+      JSONValue value = JSON.object();
+      JSONObject obj = value.visit(new JSONVisitor.Illegal<JSONObject>() {
+         @Override public JSONObject caseNull() { return null; }
+         @Override public JSONObject caseObject(JSONObject object) { return object; }
+      });
+      assertNotNull(obj);
+   }
+
+   @Test(expected = IllegalArgumentException.class)
+   public void testVisitorThrowsException()
+   {
+      JSONValue value = JSON.TRUE;
+      JSONObject obj = value.visit(new JSONVisitor.Illegal<JSONObject>() {
+         @Override public JSONObject caseNull() { return null; }
+         @Override public JSONObject caseObject(JSONObject object) { return object; }
+      });
+   }
 
 
    @Test

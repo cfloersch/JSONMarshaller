@@ -158,9 +158,9 @@ instantiation of enum types is forbidden by the JVM.
 
 Collection Support
 
-JSONMarshaller supports Set, List, Map, ConcurrentMap, NavigableMap, SortedMap, NavigableSet, and
-SortedSet collection types. Each of the above types has a default implementation when defined as
-is.
+JSONMarshaller supports Collection, Set, List, Map, ConcurrentMap, NavigableMap, ConcurrentNavigableMap,
+SortedMap, NavigableSet, and SortedSet collection types. Each of the above types has a default
+implementation when defined as is.
 
 
 ````
@@ -190,8 +190,8 @@ class loader.
 
 
 
-Options
--------
+Value Options
+-------------
 
 name option
 
@@ -455,3 +455,69 @@ The JSONMarshaller ships with a number of default User Types:
 * URI
 * URL
 * UUID
+
+
+
+
+JSON Objects & Utilities
+------------------------
+
+Along with its (un)marshalling capabilities this library comes with a set of classes and utilities for working
+with JSON structures.
+
+JSON
+* stringify will take a JSONValue and convert it into a minified string representation.
+* parse supports both streams and strings and will parse JSON into JSONValue objects.
+* array will return a JSONArray
+* object will return a JSONObject
+* number will return a JSONNumber
+* string will return a JSONString
+
+The first step to unmarshalling is almost always to parse JSON text.
+
+````
+JSONValue value = JSON.parse(request.getReader());
+Book book = marshaller.unmarshall((JSONObject)value);
+````
+
+In the above example we take a servlet request and get the Reader for the entity data and pass it to the parse
+method which converts it into a JSONValue instance. In many cases we can simply cast it to a JSONObject if we
+know it is a JSONObject as shown above. However, a cleaner method would be to use JSONValue's  visitor pattern
+to discern the type.
+
+````
+JSONValue value = JSON.parse(request.getReader());
+JSONObject obj = value.visit(new JSONVisitor.Illegal<JSONObject>() {
+   @Override public JSONObject caseNull() { return null; }
+   @Override public JSONObject caseObject(JSONObject object) { return object; }
+});
+````
+
+Builders
+
+For simple JSON Values like string, null, boolean, and number the easiest way to create an instance is to either
+parse it from a string
+
+````
+JSONValue nullValue = JSON.parse("null");
+````
+
+Or create it from the JSON utility class
+
+````
+JSONValue trueValue = JSON.TRUE;
+JSONValue string = JSON.string("Hello");
+````
+
+But for more complex objects like JSONObject and JSONArray we have provided builder classes to make life easier.
+
+````
+JSONObjectBuilder builder = objectBuilder();
+builder.add("email", objectBuilder()
+         .add("address", "joe@joe.com")
+         .add("type", "Work"))
+       .add("name", "Joe")
+       .add("age" 34);
+JSONObject built = builder.build();
+````
+
