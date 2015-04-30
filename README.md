@@ -46,7 +46,7 @@ it. JSONMarshaller offers exactly that.
 
 ````
 Book vocationCreateurs = ...;
-JSONMarshaller<Book> m = JSONmarshaller.create(Book.class);
+JSONMarshaller<Book> m = JSONMarshaller.create(Book.class);
 JSONObject o = m.marshall(vocationCreateurs);
 ````
 
@@ -54,7 +54,7 @@ and
 
 ````
 JSONObject o = ...;
-JSONMarshaller<Book> m = JSONmarshaller.create(Book.class);
+JSONMarshaller<Book> m = JSONMarshaller.create(Book.class);
 Book vocationCreateurs = m.unmarshall(o);
 ````
 
