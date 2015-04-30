@@ -100,6 +100,11 @@ Built in Type Support
 JSONMarshaller supports all base types, their corresponding wrapper classes, String and Enum types. To
 (un)marshall user defined types please refer to the UserDefinedTypes tutorial.
 
+byte, short, char, int, long, float, double
+
+Byte, Short, Character, Integer, Long, Float, Double, BigInteger, BigDecimal, String
+
+
 Enum Support
 
 Because the library has built in support for enum types, no @Entity annotation is needed in the type
@@ -125,6 +130,40 @@ This will marshall into the expected JSON representation {"abc": "A"} and vice-v
 
 If your enum type has other fields they will simply be ignored. This is due to the fact that run-time
 instantiation of enum types is forbidden by the JVM.
+
+
+Collection Support
+
+JSONMarshaller supports Set, List, Map, ConcurrentMap, NavigableMap, SortedMap, NavigableSet, and
+SortedSet collection types. Each of the above types has a default implementation when defined as
+is.
+
+
+````
+@Entity
+class Foo {
+   @Value
+   private Set<Book> books;
+}
+````
+
+By default the above will decode into a LinkedHashSet which is the default implementation for all Sets.
+
+To define an implementation specifically do this instead:
+
+
+````
+@Entity
+class Foo {
+   @Value
+   private HashSet<Book> books;
+}
+````
+
+You can also change the default Map, Set, List implementation via the system wide setters defined in
+CollectionType and MapType. Changes made to those setters will impact all unmarshalling within the
+class loader.
+
 
 
 Options
