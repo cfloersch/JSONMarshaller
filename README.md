@@ -532,6 +532,8 @@ Or create it from the JSON utility class
 ````
 JSONValue trueValue = JSON.TRUE;
 JSONValue string = JSON.string("Hello");
+JSONValue number = JSON.number(22);
+JSONValue decimal = JSON.number(22.5D);
 ````
 
 But for more complex objects like JSONObject and JSONArray we have provided builder classes to make life easier.
@@ -542,7 +544,10 @@ builder.add("email", objectBuilder()
          .add("address", "joe@joe.com")
          .add("type", "Work"))
        .add("name", "Joe")
-       .add("age" 34);
+       .add("age" 34)
+       .add("children", arrayBuilder()
+         .add("Billy")
+         .add("Carol"));
 JSONObject built = builder.build();
 ````
 
