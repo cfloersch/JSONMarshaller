@@ -489,7 +489,9 @@ to discern the type.
 JSONValue value = JSON.parse(request.getReader());
 Book book = value.visit(new JSONVisitor.Illegal<Book>() {
    @Override public Book caseNull() { return null; }
-   @Override public Book caseObject(JSONObject object) { return marshaller.unmarshall(object); }
+   @Override public Book caseObject(JSONObject object) {
+      return marshaller.unmarshall(object);
+   }
 });
 ````
 
