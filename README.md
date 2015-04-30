@@ -176,7 +176,10 @@ You can also change the default Map, Set, List implementation via the system wid
 CollectionType and MapType. Changes made to those setters will impact all unmarshalling within the
 class loader.
 
-Collections must have their generics specified. The following would fail:
+Collections, Sets, and Lists all encode into Javascript Arrays while all the Map types encode into
+Javascript Objects.
+
+NOTE: Collections must have their generics specified. The following would fail:
 
 ````
 @Entity
