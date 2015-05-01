@@ -64,6 +64,16 @@ public class MapsTest {
    }
 
 
+   private Map<Long,Long> longMap;
+
+   @Test(expected = IllegalArgumentException.class)
+   public void testLongKeyedMap() throws Exception
+   {
+      Field field = getClass().getDeclaredField("longMap");
+      factory.create(field.getGenericType());
+   }
+
+
 
    // Concrete Map Tests
    private HashMap<String,String> hashMap;

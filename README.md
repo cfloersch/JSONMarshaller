@@ -189,6 +189,8 @@ class Foo {
 }
 ````
 
+Maps are supported, however, their keys MUST be java strings. The value can be any supported type or
+entity.
 
 
 User Defined Types
