@@ -1,7 +1,8 @@
 /**
+ * Copyright 2015 XpertSoftware
+ * <p/>
  * Created By: cfloersch
- * Date: 6/6/2014
- * Copyright 2013 XpertSoftware
+ * Date: 5/1/2015
  */
 package org.xpertss.json.types;
 
@@ -9,7 +10,7 @@ import xpertss.json.JSONString;
 import xpertss.json.MarshallingException;
 import xpertss.json.spi.JSONUserType;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,35 +18,34 @@ import java.util.TimeZone;
 
 import static xpertss.json.JSON.string;
 
-// NOTE: This date format is only supported in Java 7+
-public class DateType implements JSONUserType<Date, JSONString> {
+public class TimestampType implements JSONUserType<Timestamp, JSONString> {
 
    private DateFormat format = createFormat();
 
 
-   public JSONString marshall(Date entity)
+   public JSONString marshall(Timestamp entity)
    {
       return string(format.format(entity));
    }
 
-   public Date unmarshall(JSONString object)
+   public Timestamp unmarshall(JSONString object)
    {
       try {
-         return new Date(format.parse(object.getString()).getTime());
+         return new Timestamp(format.parse(object.getString()).getTime());
       } catch(ParseException e) {
          throw new MarshallingException("invalid date format", e);
       }
    }
 
-   public Class<Date> getReturnedClass()
+   public Class<Timestamp> getReturnedClass()
    {
-      return Date.class;
+      return Timestamp.class;
    }
 
 
    private static DateFormat createFormat()
    {
-      DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+      DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX");
       format.setTimeZone(TimeZone.getTimeZone("UTC"));
       return format;
    }

@@ -14,8 +14,9 @@ import java.lang.reflect.Type;
 import java.net.InetAddress;
 import java.net.URI;
 import java.net.URL;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Currency;
-import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 import java.util.UUID;
@@ -31,8 +32,14 @@ public class DefaultUserTypes implements UserTypeService {
             return new URIType();
          } else if (klass == URL.class) {
             return new URLType();
-         } else if (klass == Date.class) {
+         } else if (klass == Timestamp.class) {
+            return new TimestampType();
+         } else if(klass == java.util.Date.class) {
+            return new DateInstantType();
+         } else if(klass == java.sql.Date.class) {
             return new DateType();
+         } else if(klass == Time.class) {
+            return new TimeType();
          } else if (klass == InetAddress.class) {
             return new InetAddressType();
          } else if (klass == MimeType.class) {

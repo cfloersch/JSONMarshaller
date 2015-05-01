@@ -1,7 +1,8 @@
 /**
+ * Copyright 2015 XpertSoftware
+ * <p/>
  * Created By: cfloersch
- * Date: 6/6/2014
- * Copyright 2013 XpertSoftware
+ * Date: 5/1/2015
  */
 package org.xpertss.json.types;
 
@@ -9,16 +10,15 @@ import xpertss.json.JSONString;
 import xpertss.json.MarshallingException;
 import xpertss.json.spi.JSONUserType;
 
-import java.sql.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.TimeZone;
 
 import static xpertss.json.JSON.string;
 
-// NOTE: This date format is only supported in Java 7+
-public class DateType implements JSONUserType<Date, JSONString> {
+public class DateInstantType implements JSONUserType<Date, JSONString> {
 
    private DateFormat format = createFormat();
 
@@ -31,7 +31,7 @@ public class DateType implements JSONUserType<Date, JSONString> {
    public Date unmarshall(JSONString object)
    {
       try {
-         return new Date(format.parse(object.getString()).getTime());
+         return format.parse(object.getString());
       } catch(ParseException e) {
          throw new MarshallingException("invalid date format", e);
       }
@@ -45,7 +45,7 @@ public class DateType implements JSONUserType<Date, JSONString> {
 
    private static DateFormat createFormat()
    {
-      DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+      DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX");
       format.setTimeZone(TimeZone.getTimeZone("UTC"));
       return format;
    }

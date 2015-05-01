@@ -273,16 +273,19 @@ org.xpertss.json.types.DefaultUserTypes
 
 The JSONMarshaller ships with a number of default User Types:
 
-* Currency
-* Date
-* InetAddress
-* Locale
-* MimeType
-* Pattern
-* Timezone
-* URI
-* URL
-* UUID
+* java.util.Currency
+* java.util.Timezone
+* java.util.Locale
+* java.util.UUID
+* java.util.Date
+* java.sql.Date
+* java.sql.Time
+* java.sql.Timestamp
+* java.net.InetAddress
+* java.net.URI
+* java.net.URL
+* java.activation.MimeType
+* java.util.regex.Pattern
 
 
 
