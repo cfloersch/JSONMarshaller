@@ -265,7 +265,7 @@ that we create a text file that will be located in the classpath with the follow
 
 /META-INF/services/xpertss.json.spi.UserTypeService
 
-The contents would be the fully qualified name of your service procvider impl
+The contents would be the fully qualified name of your service provider impl
 
 ````
 org.xpertss.json.types.DefaultUserTypes
@@ -287,6 +287,8 @@ The JSONMarshaller ships with a number of default User Types:
 * java.activation.MimeType
 * java.util.regex.Pattern
 
+Its important to note that for URL to be portable across systems both the marshalling and unmarshalling machines
+need to have the appropriate StreamHandler registered. URI is almost always a better alternative.
 
 
 
