@@ -50,6 +50,13 @@ public class MapTypeTest {
       MapType.setDefaultConcurrentMapType(MapType.ConcurrentSkipListMap);
       assertSame(ConcurrentSkipListMap, MapType.fromClass(ConcurrentMap.class));
       assertSame(ConcurrentSkipListMap, MapType.fromClass(ConcurrentNavigableMap.class));
+
+
+      // Reset
+      MapType.setDefaultMapType(MapType.LinkedHashMap);
+      MapType.setDefaultNavigableMapType(MapType.TreeMap);
+      MapType.setDefaultSortedMapType(MapType.TreeMap);
+      MapType.setDefaultConcurrentMapType(MapType.ConcurrentHashMap);
    }
 
 
