@@ -177,7 +177,7 @@ CollectionType and MapType. Changes made to those setters will impact all unmars
 class loader.
 
 Collections, Sets, and Lists all encode into Javascript Arrays while all the Map types encode into
-Javascript Objects.
+Javascript Objects. As such Maps MUST have String keys.
 
 NOTE: Collections must have their generics specified. The following would fail:
 
@@ -188,9 +188,6 @@ class Foo {
    private HashSet books;
 }
 ````
-
-Maps are supported, however, their keys MUST be java strings. The value can be any supported type or
-entity.
 
 
 User Defined Types
