@@ -35,17 +35,17 @@ methods will not function for primitive type descriptors.
 
 ===========================================================================================
 
-To prevent circular recursion which happens whenever an entitiy's field refernces
-the entity itself, I implemented a model where all entity descriptors cached.
+To prevent circular recursion which happens whenever an entity's field references
+the entity itself, I implemented a model where all entity descriptors are cached.
 The way it works is this. When we discover we need to create an entity descriptor
-we first check to see if one exists in the cache. If so we use it an discontinue
-processing. If it does not exist we create a delegating entity descriptor with
-no delegate and add it to the cache. Any child field that references the same
-entity of course would see it as being cached and discontinue the recursion.
-Once the initial code that created the delegating entity descriptor creates the
-actual descriptor it is then set on the delegating wrapper as the delegate. Thus
-when we actually marshall/unmarshall there is an actual descriptor there to do
-the encoding/decoding at all levels of the object graph.
+we first check to see if one exists in the cache. If so we use it and discontinue
+processing. If it does not exist we create a delegating entity descriptor with no
+delegate and add it to the cache. Any child field that references the same entity
+of course would see it as being cached and discontinue the recursion. Once the
+initial code that created the delegating entity descriptor creates the actual
+descriptor it is then set on the delegating wrapper as the delegate. Thus when we
+actually marshall/unmarshall there is an actual descriptor there to do the
+encoding/decoding at all levels of the object graph.
 
 
 If(cache.contains(type)) return cache.get(type);
