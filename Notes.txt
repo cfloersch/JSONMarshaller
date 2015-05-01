@@ -76,7 +76,7 @@ Entity -> FieldDescriptor
     delegate the actual marshalling/unmarshalling to the above two methods.
 
     These impls often delegate to the main encoding/decoding methods when they
-    represent object descriptions rather than primitive desxcriptors.
+    represent object descriptions rather than primitive descriptors.
 
 
 FieldDescriptor -> Descriptor
@@ -89,7 +89,7 @@ FieldDescriptor -> Descriptor
     and unboxing operations.
 
     These impls often delegate to the main encoding/decoding methods when they
-    represent object descriptions rather than primitive desxcriptors.
+    represent object descriptions rather than primitive descriptors.
 
 
 
