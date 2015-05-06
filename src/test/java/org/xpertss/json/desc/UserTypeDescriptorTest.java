@@ -7,6 +7,7 @@ import java.lang.reflect.Type;
 import java.net.InetAddress;
 import java.net.URI;
 import java.net.URL;
+import java.sql.Timestamp;
 import java.util.Date;
 
 import static org.junit.Assert.*;
@@ -38,8 +39,8 @@ public class UserTypeDescriptorTest {
    @Test
    public void testDate() throws Exception
    {
-      Date testObj = new Date();
-      UserTypeDescriptor<Date,JSONString> desc = (UserTypeDescriptor<Date,JSONString>) factory.create((Type)testObj.getClass());
+      Timestamp testObj = new Timestamp(System.currentTimeMillis());
+      UserTypeDescriptor<Timestamp,JSONString> desc = (UserTypeDescriptor<Timestamp,JSONString>) factory.create((Type)testObj.getClass());
       JSONString value = desc.marshall(testObj, null);
       assertEquals(testObj, desc.unmarshall(value, null));
    }

@@ -11,9 +11,9 @@ import java.util.TimeZone;
 import static org.junit.Assert.assertEquals;
 import static xpertss.json.JSON.string;
 
-public class DateInstantTypeTest {
+public class DateTimeTypeTest {
 
-   private static final String DATE_STR = "2012-04-23T18:25:43.511Z";
+   private static final String DATE_STR = "2012-04-23T18:25:43Z";
 
 
    private Date date;
@@ -23,7 +23,7 @@ public class DateInstantTypeTest {
    @Before
    public void setUp() throws Exception
    {
-      DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX");
+      DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssX");
       format.setTimeZone(TimeZone.getTimeZone("UTC"));
 
       date = format.parse(DATE_STR);

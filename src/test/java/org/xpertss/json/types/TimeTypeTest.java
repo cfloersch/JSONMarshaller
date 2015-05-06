@@ -13,7 +13,7 @@ import static xpertss.json.JSON.string;
 
 public class TimeTypeTest {
 
-   private static final String TIME_STR = "18:25:43.511Z";
+   private static final String TIME_STR = "18:25:43Z";
 
 
    private Time date;
@@ -23,7 +23,7 @@ public class TimeTypeTest {
    @Before
    public void setUp() throws Exception
    {
-      DateFormat format = new SimpleDateFormat("HH:mm:ss.SSSX");
+      DateFormat format = new SimpleDateFormat("HH:mm:ssX");
       format.setTimeZone(TimeZone.getTimeZone("UTC"));
 
       date = new Time(format.parse(TIME_STR).getTime());
