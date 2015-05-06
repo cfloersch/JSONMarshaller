@@ -18,7 +18,7 @@ import java.util.TimeZone;
 
 import static xpertss.json.JSON.string;
 
-public class DateInstantType implements JSONUserType<Date, JSONString> {
+public class DateTimeType implements JSONUserType<Date, JSONString> {
 
    private DateFormat format = createFormat();
 
@@ -45,7 +45,7 @@ public class DateInstantType implements JSONUserType<Date, JSONString> {
 
    private static DateFormat createFormat()
    {
-      DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX");
+      DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssX");
       format.setTimeZone(TimeZone.getTimeZone("UTC"));
       return format;
    }

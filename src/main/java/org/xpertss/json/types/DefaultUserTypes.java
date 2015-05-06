@@ -35,7 +35,7 @@ public class DefaultUserTypes implements UserTypeService {
          } else if (klass == Timestamp.class) {
             return new TimestampType();
          } else if(klass == java.util.Date.class) {
-            return new DateInstantType();
+            return new DateTimeType();
          } else if(klass == java.sql.Date.class) {
             return new DateType();
          } else if(klass == Time.class) {

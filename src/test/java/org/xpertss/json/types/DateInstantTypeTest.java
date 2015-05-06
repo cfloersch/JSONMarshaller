@@ -17,7 +17,7 @@ public class DateInstantTypeTest {
 
 
    private Date date;
-   private DateInstantType objectUnderTest;
+   private DateTimeType objectUnderTest;
 
 
    @Before
@@ -27,7 +27,7 @@ public class DateInstantTypeTest {
       format.setTimeZone(TimeZone.getTimeZone("UTC"));
 
       date = format.parse(DATE_STR);
-      objectUnderTest = new DateInstantType();
+      objectUnderTest = new DateTimeType();
    }
 
 

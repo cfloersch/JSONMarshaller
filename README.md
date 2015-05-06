@@ -290,6 +290,13 @@ The JSONMarshaller ships with a number of default User Types:
 Its important to note that for URL to be portable across systems both the marshalling and unmarshalling machines
 need to have the appropriate StreamHandler registered. URI is almost always a better alternative.
 
+The four date types all utilize ISO 8601 formatting. They are always output in UTC.
+
+* java.util.Date: _2013-07-30T12:20:08Z_ Precise up to seconds.
+* java.sql.Timestamp: _2013-07-30T12:20:08.003Z_ Precise up to milliseconds.
+* java.sql.Date: _2013-07-30_ Conveys only year, month, and day information
+* java.sql.Time: _12:20:08Z_ Conveys only hour, minute, and second information
+
 
 
 Value Options

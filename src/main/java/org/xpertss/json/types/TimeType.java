@@ -46,7 +46,7 @@ public class TimeType implements JSONUserType<Time, JSONString> {
 
    private static DateFormat createFormat()
    {
-      DateFormat format = new SimpleDateFormat("HH:mm:ss.SSSX");
+      DateFormat format = new SimpleDateFormat("HH:mm:ssX");
       format.setTimeZone(TimeZone.getTimeZone("UTC"));
       return format;
    }
