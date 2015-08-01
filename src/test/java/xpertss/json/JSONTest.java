@@ -10,11 +10,9 @@ import static org.junit.Assert.*;
 import static xpertss.json.JSON.*;
 
 import org.junit.Test;
-import org.xpertss.json.desc.BigDecimalDescriptor;
 import org.xpertss.json.util.Numbers;
 
 import java.io.ByteArrayInputStream;
-import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
