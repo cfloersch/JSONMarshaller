@@ -1,8 +1,26 @@
+So a user suggested I accept a use case in the polymorphic descriptor case where a concrete
+entity subclass does not define any properties itself but is still useful by type alone. At
+present my marshaller throws an exception complaining that the entity doesn't define any
+properties.
+
+================================================================================================
 
 Maybe I should use the ServiceProvider frame work to load subclasses for polymorphic
 entities rather than defining them using the entity annotation? The entity annotation
 makes sense when the number of subclasses is small. Three or four. But if the list
 got up to around 20 or so it would be very ugly.
+
+=================================================================================================
+
+A user made a suggestion that maybe I should build a scanner which scans for subclasses of
+a PolyMorphic entity rather than requring them to be defined in the entity subclasses
+property. I agree that forcing the definition of the subclasses in the parent is undesirable
+but scanning could also take quite a bit of time (not performant). I would have to put some
+sort of limitation such as only from within this packge, class loader, etc to limit the
+scope. Additionally, I am not sure what sort of securityManager limitations I might run into.
+
+Ultimatly I like the idea but I don't like the idea of importing a bunch of dependencies such
+as those that make up the Reflections project for example..
 
 =================================================================================================
 
