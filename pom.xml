@@ -5,7 +5,7 @@
 
    <groupId>org.xpertss</groupId>
    <artifactId>JSONMarshaller</artifactId>
-   <version>1.1.9-SNAPSHOT</version>
+   <version>1.1.8-SNAPSHOT</version>
 
    <name>${project.groupId}:${project.artifactId}</name>
    <description>A simple JSON marshaller similar to jackson</description>
