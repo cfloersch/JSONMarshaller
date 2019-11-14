@@ -5,7 +5,7 @@
 
    <groupId>org.xpertss</groupId>
    <artifactId>JSONMarshaller</artifactId>
-   <version>1.1.8</version>
+   <version>1.1.9-SNAPSHOT</version>
 
    <name>${project.groupId}:${project.artifactId}</name>
    <description>A simple JSON marshaller similar to jackson</description>
@@ -138,7 +138,7 @@
       <url>https://github.com/cfloersch/JSONMashaller</url>
       <connection>scm:git:git://git@github.com/cfloersch/JSONMarshaller.git</connection>
       <developerConnection>scm:git:git@github.com:cfloersch/JSONMarshaller.git</developerConnection>
-      <tag>JSONMarshaller-1.1.8</tag>
+      <tag>JSONMarshaller-1.1.7</tag>
    </scm>
 
    <profiles>
