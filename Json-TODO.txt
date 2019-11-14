@@ -1,8 +1,20 @@
+So I redid the Date/Time user types so that they created new DateFormats for each run or
+they used a thread local cache depending on system properties. I need to enhance that so
+I don't have copy duplication in all four classes. Secondly, it would be nice if each
+type's format could be overridden via a system property or even better an instance
+defined pattern.
+
+The only reason why I allow the disabling of the cache is that it could create a memory
+leak in systems which create new threads vs ones that pool them. Obviously creating new
+threads is a bad design but it still happens.
+
+================================================================================================
 
 Maybe I should use the ServiceProvider frame work to load subclasses for polymorphic
 entities rather than defining them using the entity annotation? The entity annotation
 makes sense when the number of subclasses is small. Three or four. But if the list
-got up to around 20 or so it would be very ugly.
+got up to around 20 or so it would be very ugly. Even better would be to scan the objects
+in the classpath and identify all implementing classes.
 
 =================================================================================================
 

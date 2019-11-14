@@ -17,21 +17,28 @@ import java.util.TimeZone;
 
 import static xpertss.json.JSON.string;
 
-// NOTE: This date format is only supported in Java 7+
 public class DateType implements JSONUserType<Date, JSONString> {
 
-   private DateFormat format = createFormat();
+   private static final String FORMAT = "yyyy-MM-dd";
 
+   private static final ThreadLocal<DateFormat> cache = new ThreadLocal<DateFormat>() {
+      protected DateFormat initialValue()
+      {
+         DateFormat format = new SimpleDateFormat(FORMAT);
+         format.setTimeZone(TimeZone.getTimeZone("UTC"));
+         return format;
+      }
+   };
 
    public JSONString marshall(Date entity)
    {
-      return string(format.format(entity));
+      return string(createFormat().format(entity));
    }
 
    public Date unmarshall(JSONString object)
    {
       try {
-         return new Date(format.parse(object.getString()).getTime());
+         return new Date(createFormat().parse(object.getString()).getTime());
       } catch(ParseException e) {
          throw new MarshallingException("invalid date format", e);
       }
@@ -45,9 +52,12 @@ public class DateType implements JSONUserType<Date, JSONString> {
 
    private static DateFormat createFormat()
    {
-      DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-      format.setTimeZone(TimeZone.getTimeZone("UTC"));
-      return format;
+      if("false".equals(System.getProperty("xpertss.date.types.cache", "true"))) {
+         DateFormat format = new SimpleDateFormat(FORMAT);
+         format.setTimeZone(TimeZone.getTimeZone("UTC"));
+         return format;
+      }
+      return cache.get();
    }
 
 }

@@ -20,19 +20,27 @@ import static xpertss.json.JSON.string;
 
 public class TimeType implements JSONUserType<Time, JSONString> {
 
-   private DateFormat format = createFormat();
+   private static final String FORMAT = "HH:mm:ssX";
 
+   private static final ThreadLocal<DateFormat> cache = new ThreadLocal<DateFormat>() {
+      protected DateFormat initialValue()
+      {
+         DateFormat format = new SimpleDateFormat(FORMAT);
+         format.setTimeZone(TimeZone.getTimeZone("UTC"));
+         return format;
+      }
+   };
 
    public JSONString marshall(Time entity)
    {
-      return string(format.format(entity));
+      return string(createFormat().format(entity));
    }
 
    public Time unmarshall(JSONString object)
    {
       try {
 
-         return new Time(format.parse(object.getString()).getTime());
+         return new Time(createFormat().parse(object.getString()).getTime());
       } catch(ParseException e) {
          throw new MarshallingException("invalid date format", e);
       }
@@ -46,9 +54,12 @@ public class TimeType implements JSONUserType<Time, JSONString> {
 
    private static DateFormat createFormat()
    {
-      DateFormat format = new SimpleDateFormat("HH:mm:ssX");
-      format.setTimeZone(TimeZone.getTimeZone("UTC"));
-      return format;
+      if("false".equals(System.getProperty("xpertss.date.types.cache", "true"))) {
+         DateFormat format = new SimpleDateFormat(FORMAT);
+         format.setTimeZone(TimeZone.getTimeZone("UTC"));
+         return format;
+      }
+      return cache.get();
    }
 
 
