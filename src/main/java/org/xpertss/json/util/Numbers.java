@@ -1,4 +1,4 @@
-/**
+/*
  * Created By: cfloersch
  * Date: 6/17/2014
  * Copyright 2013 XpertSoftware
@@ -18,9 +18,8 @@ public final class Numbers {
     * Doubles can only accurately represent integer numbers with its 53 bit mantissa.
     * This method will cast a {@code long} to a {@code double} only if its range falls
     * within the range representable by a double without losing precision.
-    * <p/>
-    * The acceptable range of a long is -9007199254740992L <= x <= 9007199254740992L
-    *
+    * <br>
+    * The acceptable range of a long is -9007199254740992L &lt;= x &lt;= 9007199254740992L
     *
     * @param value any value in the range of the {@code double} type
     * @return the {@code double} value that equals {@code value}

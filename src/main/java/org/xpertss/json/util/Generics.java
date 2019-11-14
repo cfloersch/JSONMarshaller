@@ -15,17 +15,19 @@ public final class Generics {
    /**
     * Returns {@code true} if the given type does not represent a fully
     * defined type, {@code false} otherwise.
-    * <p/>
+    * <p>
     * If the type represents a class then it returns {@code true} if the
     * class signature defines any type parameters.
-    * <p/>
+    * <p>
     * if the type is a ParameterizedType then it returns {@code true} if
     * any of the class' type parameters is matched to a wildcard type.
-    * <p/>
+    * <p>
     * If the type is a GenericArrayType then it returns {@code false}.
-    * <p/>
+    * <p>
     * Any other type will return {@code true}.
     *
+    * @param t the generic type
+    * @return true if it is a generic, false otherwise
     * @throws NullPointerException If the specified type is {@code null}
     */
    public static boolean isGeneric(Type t)
@@ -52,6 +54,11 @@ public final class Generics {
     * Returns {@code true} if the type argument at the specified index is
     * equal to the specified class. This does not support subclasses of the
     * specified class type.
+    *
+    * @param type the parameterized type to evaluate
+    * @param index the argument index of the type
+    * @param cls the class to compare the type to
+    * @return true if the type argument at index is equal to class
     */
    public static boolean isType(ParameterizedType type, int index, Class<?> cls)
    {

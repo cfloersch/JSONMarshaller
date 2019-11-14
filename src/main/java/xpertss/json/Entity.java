@@ -19,18 +19,24 @@ public @interface Entity {
    /**
     * List of subclasses of an entity. All the subclasses will be marshallable.
     * This option must be used in conjunction with {@link #discriminatorName()}.
+    *
+    * @return the entity's subclasses
     */
    Class<?>[] subclasses() default { };
 
    /**
     * The discriminator name. This option must be used in conjunction with
     * {@link #subclasses()}.
+    *
+    * @return the discriminator name
     */
    String discriminatorName() default "";
 
    /**
     * The value of the discriminator for this entity. This value is used if the
     * entity is mentioned in a parent's {@link #subclasses()} option.
+    *
+    * @return the discriminator value
     */
    String discriminator() default "";
 

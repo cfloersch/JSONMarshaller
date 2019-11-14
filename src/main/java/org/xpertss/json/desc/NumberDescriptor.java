@@ -35,13 +35,19 @@ abstract class NumberDescriptor<N extends Number> extends AbstractDescriptor<N, 
    /**
     * Converts an {@code N} into a {@link java.math.BigDecimal}. The default implementation
     * uses {@link Number#doubleValue()}.
+    *
+    * @param number the number to encode
+    * @return an encoded BigDecimal
     */
-   abstract  BigDecimal encode(N entity);
+   abstract  BigDecimal encode(N number);
 
    /**
     * Convert a {@link java.math.BigDecimal} into an {@code N}.
+    *
+    * @param number the number to decode
+    * @return a decoded JSON number
     */
-   abstract N decode(BigDecimal entity);
+   abstract N decode(BigDecimal number);
 
 
 

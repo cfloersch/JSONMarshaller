@@ -17,15 +17,14 @@ public interface FieldDescriptor {
 
    /**
     * Gets the field's Java name.
+    *
+    * @return the field name as a JSONString
     */
    JSONString getFieldName();
 
 
 
 
-   /**
-    * Gets the described field's value.
-    */
    Object getFieldValue(Object entity);
 
    byte getFieldValueByte(Object entity);
@@ -45,9 +44,6 @@ public interface FieldDescriptor {
    double getFieldValueDouble(Object entity);
 
 
-   /**
-    * Sets the described field's value.
-    */
    void setFieldValue(Object entity, Object value);
 
    void setFieldValueByte(Object entity, byte value);
@@ -69,19 +65,19 @@ public interface FieldDescriptor {
 
 
 
-   /**
+   /*
     * Tests whether the field is in a specific view.
     */
    boolean isInView(String view);
 
 
-   /**
+   /*
     * Tests whether the field is optional.
     */
    boolean isOptional();
 
 
-   /**
+   /*
     * Pretty prints the descriptor.
     */
    String toString(int pad);

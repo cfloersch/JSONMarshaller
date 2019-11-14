@@ -15,7 +15,7 @@ import static xpertss.json.JSON.*;
  * values to the array model and to return the resulting array. The
  * methods in this class can be chained to add multiple values to the
  * array.
- * <p/>
+ * <br>
  * <pre>
  *    JSONArray colors = JSON.arrayBuilder()
  *                         .add(JSON.objectBuilder()
@@ -26,6 +26,7 @@ import static xpertss.json.JSON.*;
  *                            .add("hex","ffffff"))
  *                         .build();
  * </pre>
+ *
  */
 public class JSONArrayBuilder {
 
@@ -34,6 +35,9 @@ public class JSONArrayBuilder {
 
    /**
     * Add a numeric element to the built array
+    *
+    * @param value the element value to add to the array
+    * @return this array builder
     */
    public JSONArrayBuilder add(BigDecimal value)
    {
@@ -43,6 +47,9 @@ public class JSONArrayBuilder {
 
    /**
     * Add a numeric element to the built array
+    *
+    * @param value the element value to add to the array
+    * @return this array builder
     */
    public JSONArrayBuilder add(BigInteger value)
    {
@@ -52,6 +59,9 @@ public class JSONArrayBuilder {
 
    /**
     * Add a numeric element to the built array
+    *
+    * @param value the element value to add to the array
+    * @return this array builder
     */
    public JSONArrayBuilder add(byte value)
    {
@@ -61,6 +71,9 @@ public class JSONArrayBuilder {
 
    /**
     * Add a numeric element to the built array
+    *
+    * @param value the element value to add to the array
+    * @return this array builder
     */
    public JSONArrayBuilder add(short value)
    {
@@ -70,6 +83,9 @@ public class JSONArrayBuilder {
 
    /**
     * Add a numeric element to the built array
+    *
+    * @param value the element value to add to the array
+    * @return this array builder
     */
    public JSONArrayBuilder add(int value)
    {
@@ -79,6 +95,9 @@ public class JSONArrayBuilder {
 
    /**
     * Add a numeric element to the built array
+    *
+    * @param value the element value to add to the array
+    * @return this array builder
     */
    public JSONArrayBuilder add(long value)
    {
@@ -88,6 +107,9 @@ public class JSONArrayBuilder {
 
    /**
     * Add a numeric element to the built array
+    *
+    * @param value the element value to add to the array
+    * @return this array builder
     */
    public JSONArrayBuilder add(float value)
    {
@@ -97,6 +119,9 @@ public class JSONArrayBuilder {
 
    /**
     * Add a numeric element to the built array
+    *
+    * @param value the element value to add to the array
+    * @return this array builder
     */
    public JSONArrayBuilder add(double value)
    {
@@ -108,6 +133,9 @@ public class JSONArrayBuilder {
 
    /**
     * Add a string element to the built array
+    *
+    * @param value the element value to add to the array
+    * @return this array builder
     */
    public JSONArrayBuilder add(String value)
    {
@@ -117,6 +145,9 @@ public class JSONArrayBuilder {
 
    /**
     * Add a string element to the built array
+    *
+    * @param value the element value to add to the array
+    * @return this array builder
     */
    public JSONArrayBuilder add(char value)
    {
@@ -126,6 +157,9 @@ public class JSONArrayBuilder {
 
    /**
     * Add a boolean element to the built array
+    *
+    * @param value the element value to add to the array
+    * @return this array builder
     */
    public JSONArrayBuilder add(boolean value)
    {
@@ -135,6 +169,8 @@ public class JSONArrayBuilder {
 
    /**
     * Add a null element to the built array
+    *
+    * @return this array builder
     */
    public JSONArrayBuilder addNull()
    {
@@ -145,6 +181,9 @@ public class JSONArrayBuilder {
 
    /**
     * Add an object element to the built array
+    *
+    * @param builder the builder to pull an object from
+    * @return this array builder
     */
    public JSONArrayBuilder add(JSONObjectBuilder builder)
    {
@@ -154,6 +193,9 @@ public class JSONArrayBuilder {
 
    /**
     * Add an array element to the built array
+    *
+    * @param builder array builder to pull elements from
+    * @return this array builder
     */
    public JSONArrayBuilder add(JSONArrayBuilder builder)
    {
@@ -166,8 +208,10 @@ public class JSONArrayBuilder {
    /**
     * Build the array composed of the elements previously added
     * to this builder.
-    * <p/>
+    * <p>
     * Sub objects and arrays are built at this time as well.
+    *
+    * @return a JSONArray
     */
    public JSONArray build()
    {

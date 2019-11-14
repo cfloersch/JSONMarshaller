@@ -17,6 +17,8 @@ public interface JSONBoolean extends JSONValue {
 
    /**
     * Return this boolean's value as a java boolean
+    *
+    * @return the boolean's value
     */
    boolean getBoolean();
 

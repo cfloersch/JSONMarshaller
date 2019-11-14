@@ -19,7 +19,7 @@ import static java.util.Objects.*;
 
 /**
  * JSON Utility class.
- * <p/>
+ * <p>
  * This class provides utility methods to transform JSON Values into
  * strings and from strings back into JSON Values.
  * <pre>
@@ -31,7 +31,7 @@ import static java.util.Objects.*;
  *    Reader reader = new InputStreamReader(socket.getInputStream());
  *    JSONValue value = JSON.parse(reader);
  * </pre>
- * <p/>
+ * <p>
  * This class also provides several methods to create JSON Objects,
  * Arrays, Numbers, and Strings from standard Java types.
  * <pre>
@@ -47,7 +47,7 @@ import static java.util.Objects.*;
  *    JSONArray array = JSON.array(JSON.number(BigDecimal.ONE),
  *                                  JSON.number(2000L),JSON.number(2.5D));
  * </pre>
- * <p/>
+ * <p>
  * An alternative method to build JSON values is to use the builders.
  * <pre>
  *    JSONObject object = JSON.objectBuilder().add("value", BigInteger.TEN)
@@ -56,7 +56,7 @@ import static java.util.Objects.*;
  *    JSONArray array = JSON.arrayBuilder().add(BigDecimal.ONE)
  *                            .add(2000L).add(2.5D).build();
  * </pre>
- * <p/>
+ * <p>
  * Builders may be layered together to make complex object graphs
  * <pre>
  *    JSONObject object = JSON.objectBuilder()
@@ -606,6 +606,11 @@ public final class JSON {
 
    /**
     * Parse a JSON value from a given string.
+    *
+    * @param input the JSON input as a string
+    * @return A JSONValue representation of the JSON String
+    * @throws SyntaxException if an error is encountered in the
+    *    JSON syntax
     */
    public static JSONValue parse(String input)
       throws SyntaxException
@@ -619,6 +624,12 @@ public final class JSON {
 
    /**
     * Read and parse a JSON value from a given reader.
+    *
+    * @param reader the reader to read JSON from
+    * @return A JSONValue representation of the JSON data
+    * @throws IOException if an error occurs reading from the reader
+    * @throws SyntaxException if an error is encountered in the
+    *    JSON syntax
     */
    public static JSONValue parse(Reader reader)
       throws IOException, SyntaxException
@@ -636,6 +647,9 @@ public final class JSON {
     * This differs from the toString method in that the output has spaces, tabs,
     * and newlines removed to compact the overall size of the string. This can in
     * many cases make the object more difficult to read.
+    *
+    * @param value the JSON value to stringify
+    * @return a string representation of the JSONValue
     */
    public static String stringify(JSONValue value)
    {
@@ -652,6 +666,8 @@ public final class JSON {
    /**
     * Create and return a new JSONObjectBuilder that can be used to
     * build JSONObject objects.
+    *
+    * @return a new object builder
     */
    public static JSONObjectBuilder objectBuilder()
    {
@@ -661,6 +677,8 @@ public final class JSON {
    /**
     * Create and return a new JSONArrayBuilder that can be used to
     * build JSONArray objects.
+    *
+    * @return a new array builder
     */
    public static JSONArrayBuilder arrayBuilder()
    {
@@ -884,6 +902,8 @@ public final class JSON {
 
    /**
     * Create and return a new empty json array.
+    *
+    * @return a new array
     */
    public static JSONArray array()
    {
@@ -893,6 +913,9 @@ public final class JSON {
    /**
     * Create and return a new json array pre-populated with the given
     * json values.
+    *
+    * @param values the values for the array
+    * @return a new JSONArray object
     */
    public static JSONArray array(JSONValue ... values)
    {
@@ -902,6 +925,8 @@ public final class JSON {
 
    /**
     * Create and return a new empty json object.
+    *
+    * @return a new JSON object
     */
    public static JSONObject object()
    {
@@ -911,9 +936,12 @@ public final class JSON {
    /**
     * Create and return a new json object pre-populated with the given
     * named values.
-    * <p/>
+    * <p>
     * The specified value set MUST contain an even number of entries and
     * all odd items MUST be instances of JSONString
+    *
+    * @param keyValuePairs the properties and their value
+    * @return a JSONObject object
     */
    public static JSONObject object(JSONValue... keyValuePairs)
    {
@@ -943,6 +971,8 @@ public final class JSON {
    /**
     * Create and return a new JSONNumber with the given value.
     *
+    * @param number the BigInteger number value
+    * @return a JSONNumber object
     * @throws ArithmeticException If the given big integer can not be
     *    represented with a 64-bit floating point number without loss
     *    of precision.
@@ -960,6 +990,8 @@ public final class JSON {
    /**
     * Create and return a new JSONNumber with the given value.
     *
+    * @param number the long number value
+    * @return a JSONNumber object
     * @throws ArithmeticException If the given long can not be represented
     *    with a 64-bit floating point number without loss of precision.
     */
@@ -974,6 +1006,9 @@ public final class JSON {
 
    /**
     * Create and return a new JSONNumber with the given value.
+    *
+    * @param number the float number value
+    * @return a JSONNumber object
     */
    public static JSONNumber number(float number)
    {
@@ -982,6 +1017,9 @@ public final class JSON {
 
    /**
     * Create and return a new JSONNumber with the given value.
+    *
+    * @param number the double number value
+    * @return a JSONNumber object
     */
    public static JSONNumber number(double number)
    {
@@ -992,6 +1030,8 @@ public final class JSON {
    /**
     * Create and return a new JSONNumber with the given value.
     *
+    * @param  number the decimal number value
+    * @return a JSONNumber object
     * @throws ArithmeticException If the given big decimal can not be
     *    represented with a 64-bit floating point number without loss
     *    of precision.
@@ -1004,6 +1044,9 @@ public final class JSON {
 
    /**
     * Create and return a new JSONString with the given value.
+    *
+    * @param string the string value
+    * @return a JSONString object
     */
    public static JSONString string(String string)
    {

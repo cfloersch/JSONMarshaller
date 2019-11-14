@@ -4,11 +4,11 @@ import xpertss.json.JSONValue;
 
 /**
  * JSON type to extend basic marshalling. These are user defined types.
- * <p/>
+ * <p>
  * A sample user type which encodes and decodes JSONString objects into
  * URI java types.
  * <pre>
- *    public class URIType implements JSONUserType<URI, JSONString> {
+ *    public class URIType implements JSONUserType&lt;URI, JSONString&gt; {
  *       public JSONString marshall(URI entity) {
  *          return string(entity.toString());
  *       }
@@ -21,7 +21,7 @@ import xpertss.json.JSONValue;
  *          }
  *       }
  *
- *       public Class<URI> getReturnedClass() {
+ *       public Class&lt;URI&gt; getReturnedClass() {
  *          return URI.class;
  *       }
  *    }
@@ -33,6 +33,7 @@ public interface JSONUserType<T, J extends JSONValue> {
     * Handles the marshalling of an object.
     *
     * @param object the object to marshall (never <tt>null</tt>)
+    * @return the marshalled object
     */
    public J marshall(T object);
 
@@ -40,11 +41,14 @@ public interface JSONUserType<T, J extends JSONValue> {
     * Handles the unmarshalling of an object.
     *
     * @param object the object to unmarshall (never <tt>null</tt>)
+    * @return the unmarshalled object
     */
    public T unmarshall(J object);
 
    /**
     * Returns the java type the user type operates on.
+    *
+    * @return the class type of unmarshalled objects
     */
    public Class<T> getReturnedClass();
 

@@ -1,4 +1,4 @@
-/**
+/*
  * Created By: cfloersch
  * Date: 6/6/2014
  * Copyright 2013 XpertSoftware
@@ -12,16 +12,16 @@ import java.lang.reflect.Type;
 /**
  * A service provider interface for all user defined service providers that
  * provide UserType support.
- * <p/>
+ * <br>
  * To make a service provider implementation available to the java runtime
  * a file /META-INF/services/xpertss.json.spi.UserTypeService must be packaged
  * along with the implementation into a jar together. The file should contain
  * the fully qualified class name of the user type service implementation.
- * <p/>
+ * <br>
  * An example implementation
  * <pre>
  *    public class MyUserTypes implements UserTypeService {
- *       public JSONUserType<?, ? extends JSONValue> create(Type type) {
+ *       public JSONUserType&lt;?, ? extends JSONValue&gt; create(Type type) {
  *          if(type instanceof Class) {
  *             Class klass = (Class) type;
  *             if(klass == URI.class) {
@@ -32,7 +32,7 @@ import java.lang.reflect.Type;
  *       }
  *    }
  * </pre>
- * <p/>
+ * <br>
  * For user types which need to understand generic information associated with
  * the field you should operate on the Type parameter rather than the class.
  *
@@ -46,6 +46,7 @@ public interface UserTypeService {
     * implementation it should return {@code null}.
     *
     * @param type The Type associated with the class (possibly generic information)
+    * @return a JSONUserType for the given type
     */
    public JSONUserType<?, ? extends JSONValue> create(Type type);
 

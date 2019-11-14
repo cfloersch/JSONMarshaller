@@ -11,24 +11,24 @@ import org.xpertss.json.desc.EntityDescriptor;
 
 /**
  * The entry point for marshalling and unmarshalling.
- * <p/>
+ * <p>
  * This class provides a static creator method to create JSONMarshaller
  * instances capable of marshalling and unmarshalling specific entity
  * implementations.
  * <pre>
- *    JSONMarshaller<MyEntity> marshaller = JSONMarshaller.create(MyEntity.class);
+ *    JSONMarshaller&lt;MyEntity&gt; marshaller = JSONMarshaller.create(MyEntity.class);
  *    JSONObject encoded = marshaller.marshall(new MyEntity());
  *    String jsonString = JSON.stringify(encoded);
  *    ... send encoded ...
  * </pre>
- * <p/>
+ * <p>
  * To decode a Json message received from the network:
  * <pre>
- *    JSONMarshaller<MyEntity> marshaller = JSONMarshaller.create(MyEntity.class);
+ *    JSONMarshaller&lt;MyEntity&gt; marshaller = JSONMarshaller.create(MyEntity.class);
  *    JSONObject object = (JSONObject) JSON.parse(jsonStringReadFromNetwork);
  *    MyEntity entity = marshaller.unmarshall(object);
  * </pre>
- * <p/>
+ * <p>
  * An instance of the JSONMarshaller can be reused to encode and decode many
  * times.
  */
@@ -39,7 +39,7 @@ public class JSONMarshaller<T> {
     * Create an entity marshaller that can be used to marshall entity
     * instances into JSON objects or unmarshall JSON objects back into
     * entity instances.
-    * <p/>
+    * <p>
     * The returned instance may be used many times in both encode and
     * decode capacities.
     *

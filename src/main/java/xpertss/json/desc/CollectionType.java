@@ -146,11 +146,16 @@ public enum CollectionType {
 
    /**
     * Returns a new instance of the collection type.
+    *
+    * @param <T> the type of collection values
+    * @return a new collection instance
     */
    public abstract <T> Collection<T> newCollection();
 
    /**
     * Returns the Class type of the collection type.
+    *
+    * @return the class type of returned collection instances
     */
    public abstract Class<? extends Collection> toClass();
 
@@ -159,6 +164,9 @@ public enum CollectionType {
 
    /**
     * Return the appropriate CollectionType for the given class.
+    *
+    * @param klass the class to evaluate
+    * @return the collection type for the given class
     */
    public static CollectionType fromClass(Class<? extends Collection> klass)
    {
@@ -206,6 +214,7 @@ public enum CollectionType {
     * Set the default concrete collection type to use when creating instances
     * of {@link java.util.Collection}.
     *
+    * @param type the collection type to use by default
     * @throws NullPointerException If type is {@code null}
     * @throws IllegalArgumentException If the specified type is not a
     *    subclass of Collection
@@ -223,6 +232,7 @@ public enum CollectionType {
     * Set the default concrete collection type to use when creating instances
     * of {@link java.util.List}.
     *
+    * @param type the list type to use by default
     * @throws NullPointerException If type is {@code null}
     * @throws IllegalArgumentException If the specified type is not a
     *    subclass of List
@@ -240,6 +250,7 @@ public enum CollectionType {
     * Set the default concrete collection type to use when creating instances
     * of {@link java.util.Set}.
     *
+    * @param type the set type to use by default
     * @throws NullPointerException If type is {@code null}
     * @throws IllegalArgumentException If the specified type is not a
     *    subclass of Set
@@ -257,6 +268,7 @@ public enum CollectionType {
     * Set the default concrete collection type to use when creating instances
     * of {@link java.util.SortedSet}.
     *
+    * @param type the sorted set type to use by default
     * @throws NullPointerException If type is {@code null}
     * @throws IllegalArgumentException If the specified type is not a
     *    subclass of SortedSet
@@ -274,6 +286,7 @@ public enum CollectionType {
     * Set the default concrete collection type to use when creating instances
     * of {@link java.util.NavigableSet}.
     *
+    * @param type the navigable set type to use by default
     * @throws NullPointerException If type is {@code null}
     * @throws IllegalArgumentException If the specified type is not a
     *    subclass of NavigableSet

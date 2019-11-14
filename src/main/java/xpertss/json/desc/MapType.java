@@ -141,17 +141,26 @@ public enum MapType {
 
    /**
     * Returns a new instance of the map type.
+    *
+    * @param <K> the type of the Map keys
+    * @param <V> the type of mapped value
+    * @return a new Map instance of the default type
     */
    public abstract <K, V> Map<K, V> newMap();
 
    /**
     * Returns the Class type of the map type.
+    *
+    * @return the class type of the map
     */
    public abstract Class<? extends Map> toClass();
 
 
    /**
     * Return the appropriate MapType for the given class.
+    *
+    * @param klass the map class to obtain a type for
+    * @return the MapType for the given map class
     */
    public static MapType fromClass(Class<? extends Map> klass)
    {
@@ -198,6 +207,7 @@ public enum MapType {
     * Set the default concrete map type to use when creating instances of
     * {@link java.util.Map}.
     *
+    * @param type the map type to default to
     * @throws NullPointerException If type is {@code null}
     * @throws IllegalArgumentException If the specified type is not a
     *    subclass of Map
@@ -215,6 +225,7 @@ public enum MapType {
     * Set the default concrete map type to use when creating instances of
     * {@link java.util.SortedMap}.
     *
+    * @param type the sorted map type to default to
     * @throws NullPointerException If type is {@code null}
     * @throws IllegalArgumentException If the specified type is not a
     *    subclass of SortedMap
@@ -232,6 +243,7 @@ public enum MapType {
     * Set the default concrete map type to use when creating instances of
     * {@link java.util.NavigableMap}.
     *
+    * @param type  the navigable map type to default to
     * @throws NullPointerException If type is {@code null}
     * @throws IllegalArgumentException If the specified type is not a
     *    subclass of NavigableMap
@@ -250,6 +262,7 @@ public enum MapType {
     * Set the default concrete map type to use when creating instances of
     * {@link java.util.concurrent.ConcurrentMap}.
     *
+    * @param type the concurrent map type to default to
     * @throws NullPointerException If type is {@code null}
     * @throws IllegalArgumentException If the specified type is not a
     *    subclass of ConcurrentMap
@@ -267,6 +280,7 @@ public enum MapType {
     * Set the default concrete map type to use when creating instances of
     * {@link java.util.concurrent.ConcurrentNavigableMap}.
     *
+    * @param type the concurrent navigable map type to default to
     * @throws NullPointerException If type is {@code null}
     * @throws IllegalArgumentException If the specified type is not a
     *    subclass of ConcurrentNavigableMap

@@ -15,7 +15,7 @@ import static xpertss.json.JSON.number;
  * name/value pairs to the object model and to return the resulting
  * object. The methods in this class can be chained to add multiple
  * name/value pairs to the object.
- * <p/>
+ * <br>
  * <pre>
  *    JSONObject object = JSON.objectBuilder()
  *                         .add("firstName", "Chris")
@@ -35,6 +35,10 @@ public class JSONObjectBuilder {
 
    /**
     * Add a string property to the built object.
+    *
+    * @param name the object property name
+    * @param value the object property value
+    * @return this object builder
     */
    public JSONObjectBuilder add(String name, String value)
    {
@@ -44,6 +48,10 @@ public class JSONObjectBuilder {
 
    /**
     * Add a string property to the built object.
+    *
+    * @param name the object property name
+    * @param value the object property value
+    * @return this object builder
     */
    public JSONObjectBuilder add(String name, char value)
    {
@@ -52,6 +60,10 @@ public class JSONObjectBuilder {
 
    /**
     * Add a boolean property to the built object.
+    *
+    * @param name the object property name
+    * @param value the object property value
+    * @return this object builder
     */
    public JSONObjectBuilder add(String name, boolean value)
    {
@@ -61,6 +73,10 @@ public class JSONObjectBuilder {
 
    /**
     * Add a numeric property to the built object.
+    *
+    * @param name the object property name
+    * @param value the object property value
+    * @return this object builder
     */
    public JSONObjectBuilder add(String name, BigInteger value)
    {
@@ -70,6 +86,10 @@ public class JSONObjectBuilder {
 
    /**
     * Add a numeric property to the built object.
+    *
+    * @param name the object property name
+    * @param value the object property value
+    * @return this object builder
     */
    public JSONObjectBuilder add(String name, BigDecimal value)
    {
@@ -79,6 +99,10 @@ public class JSONObjectBuilder {
 
    /**
     * Add a numeric property to the built object.
+    *
+    * @param name the object property name
+    * @param value the object property value
+    * @return this object builder
     */
    public JSONObjectBuilder add(String name, byte value)
    {
@@ -91,6 +115,10 @@ public class JSONObjectBuilder {
 
    /**
     * Add a numeric property to the built object.
+    *
+    * @param name the object property name
+    * @param value the object property value
+    * @return this object builder
     */
    public JSONObjectBuilder add(String name, short value)
    {
@@ -101,6 +129,10 @@ public class JSONObjectBuilder {
 
    /**
     * Add a numeric property to the built object.
+    *
+    * @param name the object property name
+    * @param value the object property value
+    * @return this object builder
     */
    public JSONObjectBuilder add(String name, int value)
    {
@@ -111,6 +143,10 @@ public class JSONObjectBuilder {
 
    /**
     * Add a numeric property to the built object.
+    *
+    * @param name the object property name
+    * @param value the object property value
+    * @return this object builder
     */
    public JSONObjectBuilder add(String name, long value)
    {
@@ -121,6 +157,10 @@ public class JSONObjectBuilder {
 
    /**
     * Add a numeric property to the built object.
+    *
+    * @param name the object property name
+    * @param value the object property value
+    * @return this object builder
     */
    public JSONObjectBuilder add(String name, float value)
    {
@@ -131,6 +171,10 @@ public class JSONObjectBuilder {
 
    /**
     * Add a numeric property to the built object.
+    *
+    * @param name the object property name
+    * @param value the object property value
+    * @return this object builder
     */
    public JSONObjectBuilder add(String name, double value)
    {
@@ -141,6 +185,9 @@ public class JSONObjectBuilder {
 
    /**
     * Add a null property to the built object.
+    *
+    * @param name the object property name
+    * @return this object builder
     */
    public JSONObjectBuilder addNull(String name)
    {
@@ -152,6 +199,10 @@ public class JSONObjectBuilder {
 
    /**
     * Add an object property to the built object.
+    *
+    * @param name the object property name
+    * @param builder the builder to generate the value
+    * @return this object builder
     */
    public JSONObjectBuilder add(String name, JSONObjectBuilder builder)
    {
@@ -161,6 +212,10 @@ public class JSONObjectBuilder {
 
    /**
     * Add an array property to the built object.
+    *
+    * @param name the object property name
+    * @param builder the builder to generate the value
+    * @return this object builder
     */
    public JSONObjectBuilder add(String name, JSONArrayBuilder builder)
    {
@@ -173,8 +228,10 @@ public class JSONObjectBuilder {
    /**
     * Build the object composed of the properties previously added
     * to this builder.
-    * <p/>
+    * <br>
     * Sub objects and arrays are built at this time as well.
+    *
+    * @return a JSONObject
     */
    public JSONObject build()
    {
